@@ -1,16 +1,37 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app id="app">
+    <v-toolbar color="indigo" dark fixed app>
+      <v-toolbar-items>
+        <v-btn dark flat to="/">Ask IT</v-btn>
+      </v-toolbar-items>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-divider vertical></v-divider>
+        <v-btn flat to="/signin">
+          <v-icon>exit_to_app</v-icon> Sign In
+        </v-btn>
+        <v-divider vertical></v-divider>
+        <v-btn flat to="/signup">
+          <v-icon>person_add</v-icon> Sign Up
+        </v-btn>
+        <v-divider vertical></v-divider>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-content>
+      <router-view/>
+    </v-content>
+    <v-footer></v-footer>
+  </v-app>
 </template>
+
+<script>
+export default {};
+</script>
+
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
