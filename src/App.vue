@@ -1,31 +1,66 @@
 <template>
   <v-app id="app">
-    <v-toolbar color="indigo" dark fixed app>
-      <v-toolbar-items>
-        <v-btn dark flat to="/">Ask IT</v-btn>
-      </v-toolbar-items>
+    <v-toolbar color="primary" dark fixed app>
+      <v-toolbar-title>Ask IT</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
+
         <v-divider vertical></v-divider>
-        <v-btn flat to="/signin">
-          <v-icon>exit_to_app</v-icon> Sign In
+        <v-btn flat
+          v-if="!authenticated"
+          @click="showAuthDialog('signin')">
+          <v-icon>exit_to_app</v-icon>
+          Sign In
         </v-btn>
+
         <v-divider vertical></v-divider>
-        <v-btn flat to="/signup">
-          <v-icon>person_add</v-icon> Sign Up
+        <v-btn flat
+          v-if="!authenticated"
+          @click="showAuthDialog('signup')">
+          <v-icon>person_add</v-icon>
+          Sign Up
         </v-btn>
+
+        <v-divider vertical></v-divider>
+        <v-btn flat
+          v-if="authenticated"
+          @click="signout">
+          <v-icon>settings_power</v-icon>
+          Sign Out
+        </v-btn>
+
         <v-divider vertical></v-divider>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
       <router-view/>
+      <AuthDialog ref="authDialog" />
     </v-content>
     <v-footer></v-footer>
   </v-app>
 </template>
 
 <script>
-export default {};
+import AuthDialog from "@/components/AuthDialog";
+
+export default {
+  components: {
+    AuthDialog
+  },
+  methods: {
+    showAuthDialog(value) {
+      this.$refs.authDialog.setDialog(value);
+    },
+    signout() {
+      this.$store.dispatch("signout");
+    }
+  },
+  computed: {
+    authenticated() {
+      return this.$store.getters.authenticated;
+    }
+  }
+};
 </script>
 
 
@@ -48,5 +83,9 @@ export default {};
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
 }
 </style>
